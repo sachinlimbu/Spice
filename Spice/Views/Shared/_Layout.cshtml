@@ -17,11 +17,11 @@
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body class="search-background">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Spice</a>
+                <a class="navbar-brand" asp-action="Index" asp-controller="Home" asp-area="Customer">Spice</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -36,7 +36,7 @@
                                 Content Management
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                                <a class="dropdown-item"> Category </a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Category" asp-area="Admin"> Category </a>
                                 <a class="dropdown-item"> Sub Category </a>
                                 <a class="dropdown-item"> MenuItem </a>
                                 <a class="dropdown-item"> Coupons </a>
@@ -70,6 +70,8 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="https://kit.fontawesome.com/de91b7b85f.js"></script>
+
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -84,6 +86,7 @@
                 crossorigin="anonymous"
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
+        <script src="https://kit.fontawesome.com/de91b7b85f.js"></script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
