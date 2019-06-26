@@ -130,7 +130,7 @@ namespace Spice.Areas.Identity.Pages.Account
                             {
                                 await _userManager.AddToRoleAsync(user, SD.ManagerUser);
                             }
-                            else
+                             else
                             {
                                 await _userManager.AddToRoleAsync(user, SD.CustomerEndUser);
                                 await _signInManager.SignInAsync(user, isPersistent: false);
@@ -140,7 +140,7 @@ namespace Spice.Areas.Identity.Pages.Account
                     }
 
                     return RedirectToAction("Index", "User", new { area = "Admin" });
-                    _logger.LogInformation("User created a new account with password.");
+                    //_logger.LogInformation("User created a new account with password.");
 
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     //var callbackUrl = Url.Page(

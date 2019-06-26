@@ -39,8 +39,8 @@ namespace Spice.Controllers
 
             if (claim != null)
             {
-                var countt = context.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList().Count;
-                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, countt);
+                var count = context.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList().Count;
+                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, count);
             }
 
 
@@ -78,23 +78,28 @@ namespace Spice.Controllers
                 //User ID and Passed to Shopping obj
                 shoppingCartobj.ApplicationUserId = claim.Value;
 
+
+                //Using the ID, Record has been retrieved
                 ShoppingCart cartFromDb = await context.ShoppingCarts
                     .Where(c => c.ApplicationUserId == shoppingCartobj.ApplicationUserId && c.MenuItemId == shoppingCartobj.MenuItemId)
                     .FirstOrDefaultAsync();
 
+                //Check for incoming data, if null meaning this user has not been added in the item therefore we can add them
                 if (cartFromDb == null)
                 {
                     await context.ShoppingCarts.AddAsync(shoppingCartobj);
                 }
                 else
                 {
+                    //If not it will just update the count
                     cartFromDb.Count = cartFromDb.Count + shoppingCartobj.Count;
                 }
                 await context.SaveChangesAsync();
 
                 var count = context.ShoppingCarts.Where(c => c.ApplicationUserId == shoppingCartobj.ApplicationUserId).ToList().Count();
 
-                HttpContext.Session.SetInt32("ssCartCourt", count);
+                //Session used 
+                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, count);
 
                 return RedirectToAction(nameof(Index));
             }

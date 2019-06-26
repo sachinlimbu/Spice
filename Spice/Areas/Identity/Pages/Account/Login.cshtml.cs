@@ -83,11 +83,13 @@ namespace Spice.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    //var user = context.Users.FirstOrDefaultAsync(x => x.Email == Input.Email);
+                    //var user = context.Users.FirstOrDefaultAsync(x => x. Email == Input.Email);
                     var user = await context.Users.Where(x => x.Email == Input.Email).FirstOrDefaultAsync();
 
+                    //Get all the list of shopping product for the user
                     List<ShoppingCart> listShoppingCarts = await context.ShoppingCarts.Where(x => x.ApplicationUserId == user.Id).ToListAsync();
 
+                    //Just display count
                     HttpContext.Session.SetInt32(SD.ssShoppingCartCount, listShoppingCarts.Count);
 
                     _logger.LogInformation("User logged in.");
