@@ -2,53 +2,35 @@
 
 @if (Model.Count() > 0)
 {
-    <div class="col-12 post @Model.FirstOrDefault().Category.Name.Replace(" ",string.Empty) menu-restaurant">
-        <div class="row">
-            <h3 class="text-success">@Model.FirstOrDefault().Category.Name </h3>
+    <div class="overflow-hiddentext-center bg-light post @Model.FirstOrDefault().Category.Name.Replace(" ",string.Empty) menu-restaurant">
+        <div class="col-md-5 mx-auto my-5">
+            <h1 class="display-4 font-weight-normal">@Model.FirstOrDefault().Category.Name</h1>
         </div>
-        @foreach (var item in Model)
-        {
-            <div class="border border-info rounded col-12" style="margin-bottom:10px; margin-top:10px; padding:10px">
-                <div class="row">
-                    <div class="col-md-3 col-sm-12">
-                        <img src="@item.Image" width="250px" height="250px" style="border-radius:5px;border:1px solid #bbb9b9" />
-                    </div>
-                    <div class="col-md-9 col-sm-12">
-                        <div class="row pr-3">
-                            <div class="col-8">
-                                <label class="text-primary" style="font-size:21px; color:maroon">
-                                    @item.Name
-                                </label>
-                                @if (item.Spicyness == "1")
-                                {
-                                    <img srcset="~/images/mild.png" title="Mild" />
-                                }
-                                @if (item.Spicyness == "2")
-                                {
-                                    <img srcset="~/images/spicy.png" title="Spicy" />
-                                }
-                                @if (item.Spicyness == "1")
-                                {
-                                    <img srcset="~/images/verySpicy.png" title="Very Spicy" />
-                                }
-                            </div>
-                            <div class="col-4 text-right" style="color:maroon">
-                                <h4>$@item.Price</h4>
+
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top product-cap-size" src="@item.Image" alt="Card image cap">
+
+                        <div class="card-body">
+                            <p class="card-text">@Html.Raw(item.Description)</p>
+                            <h1 class="card-title pricing-card-title"><small class="text-muted">Price : </small>$@item.Price </h1>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group p-3">
+                                    @*<button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>*@
+                                    <a asp-action="Details" class="btn btn-lg btn-primary form-control" asp-route-id="@item.Id">Add to Basket</a>
+
+                                </div>
+                                @*<small class="text-muted">9 mins</small>*@
                             </div>
                         </div>
-
-                        <div class="row col-12 text-justify d-none d-md-block">
-                            <p>@Html.Raw(item.Description)</p>
-                        </div>
-                        <div class="col-md-3 col-sm-12 offset-md-9 text-center">
-                            <a asp-action="Details" class="btn btn-success form-control" asp-route-id="@item.Id">Details</a>
-                        </div>
-
                     </div>
                 </div>
-            </div>
-        }
-        <div class="p-4"></div>
+            }
+        </div>
     </div>
-
 }
+

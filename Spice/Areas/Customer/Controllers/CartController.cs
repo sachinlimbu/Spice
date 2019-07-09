@@ -51,7 +51,7 @@ namespace Spice.Areas.Customer.Controllers
 
             foreach (var item in orderDetailCartVM.ListShoppingCarts)
             {
-                item.MenuItem = await context.MenuItems.FirstOrDefaultAsync(m => m.Id == item.MenuItemId);
+                item.MenuItem = await context.MenuItems.Include(m => m.SubCategory).FirstOrDefaultAsync(m => m.Id == item.MenuItemId);
 
                 orderDetailCartVM.OrderHeader.OrderTotal = orderDetailCartVM.OrderHeader.OrderTotal + (item.MenuItem.Price * item.Count);
 
@@ -280,10 +280,18 @@ namespace Spice.Areas.Customer.Controllers
             {
                 orderDetailCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusRejected;
             }
-            //return RedirectToAction("Confirm", "Order", new { id = orderDetailCartVM.OrderHeader.Id });
+            return RedirectToAction("Confirm", "Order", new { id = orderDetailCartVM.OrderHeader.Id });
 
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
         }
+
+        //public async Task<IActionResult> OrderHistory() {
+        //    var claimsIdentity = (ClaimsIdentity)User.Identity;
+        //    var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+        //    List<OrderDetailsViewModel> orderList = new List<OrderDetailsViewModel>();
+        //    List<OrderHeader> orderHeadersList = 
+        //}
+
     }
 
 }

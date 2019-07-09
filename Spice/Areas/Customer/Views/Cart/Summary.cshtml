@@ -17,13 +17,14 @@
         <div class="backgroundWhiteBorder">
             <div class="container">
                 <div class="card">
-                    <div class="card-header bg-dark text-light ml-0 row container">
-                        <div class="col-6">
+                    <div class="card-header alert alert-dark text-dark ml-0 row container">
+                        <div class="col-6 p-2 px-3 text-uppercase font-weight-bold">
                             <i class="fade fa-shopping-cart"></i>&nbsp;
                             Order Summary
                         </div>
-                        <div class="col-6 text-right">
-                            <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn btn-outline-info btn-sm">Back to Cart</a>
+                        <div class="col-6 text-right p-2 px-3 text-uppercase">
+                            <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn btn-success rounded-pill btn-sm font-weight-bold">Back to Cart</a>
+
                         </div>
                     </div>
                     <div class="card-body">
@@ -92,7 +93,7 @@
                                                     <h6 class="my-0">@details.MenuItem.Name</h6>
                                                     <small class="text-success">Quantity: @details.Count</small>
                                                 </div>
-                                                <span class="text-muted">$@(details.MenuItem.Price * details.Count)</span>
+                                                <span class="text-muted">£@(details.MenuItem.Price * details.Count)</span>
                                                 @{ total += (details.MenuItem.Price * details.Count); }
                                             </li>
                                         }
@@ -103,12 +104,12 @@
                                                     <h6 class="my-0">Promo Code</h6>
                                                     <small class="text-muted">@Model.OrderHeader.CouponCode</small>
                                                 </div>
-                                                <span class="text-success">-$@(total - Model.OrderHeader.OrderTotal)</span>
+                                                <span class="text-success">-£@(total - Model.OrderHeader.OrderTotal)</span>
                                             </li>
                                         }
                                         <li class="list-group-item d-flex justify-content-between bg-light">
-                                            <small class="text-info">Total (USD)</small>
-                                            <strong class="text-info">$@(Model.OrderHeader.OrderTotal)</strong>
+                                            <small class="text-info">Total (GB)</small>
+                                            <strong class="text-info">£@(Model.OrderHeader.OrderTotal)</strong>
                                         </li>
                                     </ul>
                                 </div>
@@ -124,8 +125,8 @@
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                         data-key="@Stripe.Value.Publishablekey"
                                         data-amount="@OrderTotalForStrip"
-                                        data-name="Spice Restaurant"
-                                        data-description="Good Food, Good Mood."
+                                        data-name="Your Likes"
+                                        data-description="Every day Clothing."
                                         data-locale="auto"
                                         data-allow-remember-me="false"
                                         data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
@@ -134,7 +135,9 @@
                                     document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
 
 /**/</script>
-                                <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-success form-control">Place Order</button>
+                                <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-primary rounded-pill py-3 btn-block">Place Order</button>
+
+
                             </div>
                         </div>
                     </div>

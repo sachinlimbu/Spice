@@ -3,7 +3,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@if (Model.Coupons.ToList().Count > 0)
+@*@if (Model.Coupons.ToList().Count > 0)
 {
     <div class="border">
         <div class="carousel" data-ride="carousel" data-interval="2500">
@@ -32,13 +32,13 @@
             }
         </div>
     </div>
-}
+}*@
 
 <br /> <br />
 <div class="backgroundWhite container">
 
     <ul id="menu-filters" class="menu-filter-list list-inline text-center">
-        <li class="filter active btn btn-secondary ml-1 mr-1" data-filter=".menu-restaurant">Show All</li>
+        <li class="filter active btn btn-primary ml-1 mr-1" data-filter=".menu-restaurant">Show All</li>
 
         @foreach (var item in Model.Categories)
         {
@@ -48,8 +48,14 @@
 
     @foreach (var category in Model.Categories)
     {
-        <div class="row" id="menu-wrapper">
-            <partial name="~/Views/Shared/MainPage/_ThumbnailAreaPartial.cshtml" model="Model.MenuItems.Where(x =>x.Category.Name == category.Name)" />
+        @*<div class="row" id="menu-wrapper">
+            </div>*@
+        
+        <div class="album bg-light row" id="menu-wrapper">
+          
+            <div class="container">
+              <partial name="~/Views/Shared/MainPage/_ThumbnailAreaPartial.cshtml" model="Model.MenuItems.Where(x =>x.Category.Name == category.Name)" />
+            </div>
         </div>
     }
 
@@ -66,8 +72,8 @@
         var posts = $('.post');
         (function ($) {
         $("#menu-filters li").click(function () {
-            $("#menu-filters li").removeClass('active btn btn-secondary');
-            $(this).addClass('active btn btn-secondary');
+            $("#menu-filters li").removeClass('active btn btn-primary');
+            $(this).addClass('active btn btn-primary');
 
             var selectedFilter = $(this).data("filter");
 

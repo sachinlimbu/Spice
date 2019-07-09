@@ -107,35 +107,33 @@ namespace Spice.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostEdit(SubCategoryAndCategoryViewModel model)
         {
-
             if (ModelState.IsValid)
             {
                 var doesSubCategoryExists = context.SubCategories.Include(s => s.Category).Where(s => s.Name == model.SubCategory.Name && s.Category.Id == model.SubCategory.CategoryId);
 
                 if (doesSubCategoryExists.Count() > 0)
                 {
-                    //Error Message
-                    StatusMessage = "Error : Sub Category exists under " + doesSubCategoryExists.First().Name + " category. Please use another name";
+                    //Error
+                    StatusMessage = "Error : Sub Category exists under " + doesSubCategoryExists.First().Category.Name + " category. Please use another name.";
                 }
                 else
                 {
                     var subCatFromDb = await context.SubCategories.FindAsync(model.SubCategory.Id);
                     subCatFromDb.Name = model.SubCategory.Name;
-                    //context.Update(subCatFromDb);
+
                     await context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-
             }
-
-            SubCategoryAndCategoryViewModel modelVm = new SubCategoryAndCategoryViewModel()
+            SubCategoryAndCategoryViewModel modelVM = new SubCategoryAndCategoryViewModel()
             {
                 CategoryList = await context.Categories.ToListAsync(),
                 SubCategory = model.SubCategory,
-                SubCategoryList = await context.SubCategories.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync(),
+                SubCategoryList = await context.SubCategories.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
                 Message = StatusMessage
             };
-            return View(modelVm);
+            //modelVM.SubCategory.Id = id;
+            return View(modelVM);
         }
 
 

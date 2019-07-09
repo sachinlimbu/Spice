@@ -79,7 +79,7 @@ namespace Spice.Areas.Admin.Controllers
         }
 
         //GET DETAILS
-        public async Task<IActionResult> Details(int?id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -111,15 +111,17 @@ namespace Spice.Areas.Admin.Controllers
         //POST DELETE
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostDelete()
+        public async Task<IActionResult> PostDelete(int? id)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                context.Categories.Remove(Category);
-                await context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            return View(Category);
+
+            var category = await context.Categories.FindAsync(id);
+            context.Categories.Remove(category);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
     }
